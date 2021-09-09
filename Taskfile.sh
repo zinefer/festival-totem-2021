@@ -10,6 +10,7 @@ function install {
     $ARDUINO_CLI core install esp32:esp32
     lib-install 'FastLED@3.4.0'
     lib-install 'Adafruit BNO055@1.5.0'
+    lib-install 'FreeRTOS@10.4.4-2'
 }
 
 function lib-install {
