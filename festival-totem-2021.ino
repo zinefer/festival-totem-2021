@@ -1,4 +1,5 @@
 // LED Deps
+#define FASTLED_INTERNAL
 #include "FastLED.h"
 
 // 9DoF Deps
@@ -8,21 +9,33 @@
 #include <utility/imumaths.h>
 
 #include "src/state/PositionState.h"
+#include "src/state/HueState.h"
 #include "src/state/SerialState.h"
+
 #include "src/effects/BaseEffect.h"
 
 using namespace state;
 using namespace effects;
 
+FASTLED_USING_NAMESPACE
+
+#include "src/config.h"
+
 Adafruit_BNO055 bno = Adafruit_BNO055(55);
-PositionState* position;
+PositionState *position;
+HueState *hue;
+
+CRGB leds[NUM_LEDS];
 
 void setup() {
     position = new PositionState();
+    hue = new HueState();
 
     Serial.begin(19200);
     delay(3000); // 3 seconds of delay for disaster recovery
     setupPositionSensor();
+
+    FastLED.addLeds<LED_TYPE,DATA_PIN,CLK_PIN,COLOR_ORDER,DATA_RATE_MHZ(12)>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
 }
 
 void setupPositionSensor() {
@@ -39,6 +52,10 @@ void setupPositionSensor() {
 
 void loop() {
 
+
+
+    // slowly cycle the "base color" through the rainbow
+    EVERY_N_MILLISECONDS( 20 ) { hue->increment(); }
 }
 
 void updatePosition() {

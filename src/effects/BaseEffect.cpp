@@ -2,8 +2,8 @@
 
 namespace effects {
 
-    BaseEffect::BaseEffect(state::PositionState p){
-        position = p;
+    BaseEffect::BaseEffect(CRGB *l){
+        leds = l;
     }
 
     void BaseEffect::start() {
@@ -28,7 +28,7 @@ namespace effects {
 
             // Manage framerate
             unsigned long frame_duration = millis() - _this->frame_start;
-            FastLED.delay((1000 - frame_duration) / _this->FRAMES_PER_SECOND);
+            FastLED.delay((1000 - frame_duration) / FRAMES_PER_SECOND);
         }
     }
 
