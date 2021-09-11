@@ -1,8 +1,4 @@
-#include "BaseEffect.h"
 #include "RainbowEffect.h"
-
-using namespace states;
-using namespace overlays;
 
 namespace effects {
 

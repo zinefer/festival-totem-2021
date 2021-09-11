@@ -1,8 +1,9 @@
+#ifndef RAINBOWEFFECT
+#define RAINBOWEFFECT
 #include "BaseEffect.h"
 
+#include "../states/OverlayState.h"
 #include "../states/HueState.h"
-
-#include "../overlays/BaseOverlay.h"
 
 using namespace states;
 
@@ -13,6 +14,7 @@ namespace effects {
             HueState *hue;
             byte rDelta;
 
+        protected:
             void frame();
             
         public:
@@ -20,3 +22,4 @@ namespace effects {
     };
 
 }
+#endif

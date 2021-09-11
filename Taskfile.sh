@@ -26,6 +26,17 @@ function compile {
     $ARDUINO_CLI compile --fqbn esp32:esp32:esp32 .
 }
 
+function new {
+    TYPE=${1?}
+    NAME=${2?}Effect
+
+    cat templates/$TYPE/${TYPE^}.h | sed -E "s/TemplateEffect/${NAME^}/g" \
+        > src/${TYPE}s/${NAME^}.h
+    
+    cat templates/$TYPE/${TYPE^}.cpp | sed -E "s/TemplateEffect/${NAME^}/g" \
+        > src/${TYPE}s/${NAME^}.cpp
+}
+
 function help {
     echo "$0 <task> <args>"
     echo "Tasks:"
