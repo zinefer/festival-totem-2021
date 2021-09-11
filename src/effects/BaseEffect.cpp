@@ -2,8 +2,10 @@
 
 namespace effects {
 
-    BaseEffect::BaseEffect(CRGB *l){
+    BaseEffect::BaseEffect(CRGB *l, OverlayState *o){
         leds = l;
+        overlay = o;
+        started = false;
     }
 
     void BaseEffect::start() {
@@ -14,7 +16,9 @@ namespace effects {
             this,          //Task input parameter 
             taskPriority,  //Priority of the task 
             &Task1,        //Task handle.
-            taskCore);     //Core where the task should run 
+            taskCore);     //Core where the task should run
+
+        started = true;
     }
 
     void BaseEffect::loop(void *pvParameters) {
@@ -23,6 +27,11 @@ namespace effects {
             _this->frame_start = millis();
 
             _this->frame();
+
+            BaseOverlay *o = _this->overlay->get();
+            if (o != NULL) {
+                o->frame();
+            }
             
             FastLED.show();
 
@@ -38,6 +47,7 @@ namespace effects {
 
     void BaseEffect::stop() {
         vTaskDelete(Task1);
+        started = false;
     }
 
 }

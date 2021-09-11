@@ -1,13 +1,17 @@
 #ifndef BASEEFFECT
 #define BASEEFFECT
-#define FASTLED_INTERNAL
-#include "FastLED.h"
-
+#include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
+#define FASTLED_INTERNAL
+#include "FastLED.h"
 #include "../config.h"
 
-#include "../state/PositionState.h"
+#include "../overlays/BaseOverlay.h"
+#include "../states/OverlayState.h"
+
+using namespace states;
+using namespace overlays;
 
 namespace effects {
 
@@ -20,6 +24,8 @@ namespace effects {
             unsigned long frame_start;
             TaskHandle_t Task1;
 
+            OverlayState *overlay;
+
             static void loop(void *pvParameters);
             void frame();
 
@@ -27,7 +33,9 @@ namespace effects {
             CRGB *leds;
             
         public:
-            BaseEffect(CRGB *l);
+            bool started;
+            
+            BaseEffect(CRGB *l, OverlayState *o);
             void start();
             void stop();
     };

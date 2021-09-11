@@ -1,19 +1,22 @@
 #include "BaseEffect.h"
 
-#include "../state/HueState.h"
+#include "../states/HueState.h"
 
-using namespace state;
+#include "../overlays/BaseOverlay.h"
+
+using namespace states;
 
 namespace effects {
 
     class RainbowEffect: public BaseEffect {
         private:
             HueState *hue;
+            byte rDelta;
 
             void frame();
             
         public:
-            RainbowEffect(CRGB *l, HueState *h);
+            RainbowEffect(CRGB *l, OverlayState *o, HueState *h);
     };
 
 }
