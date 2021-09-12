@@ -6,6 +6,7 @@ namespace effects {
         hue = h;
     }
 
+    // eight colored dots, weaving in and out of sync with each other
     void JuggleEffect::frame() {
         fadeToBlackBy(leds, NUM_LEDS, 20);
 

@@ -72,6 +72,7 @@ void setupPositionSensor() {
 
 void loop() {
     updatePosition();
+    
     animator->tick();
 
     // slowly cycle the "base color" through the rainbow

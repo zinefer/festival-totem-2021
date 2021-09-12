@@ -6,6 +6,7 @@ namespace effects {
         duration = d;
     }
 
+    // 1 dot every other LED is turned off and move it along the strip
     void ChaseEffect::frame() {
         RainbowEffect::frame();
         int offset = (duration / 75) % 3;

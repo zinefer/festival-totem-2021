@@ -6,6 +6,7 @@ namespace effects {
         hue = h;
     }
 
+    // a colored dot sweeping back and forth, with fading trails
     void SinelonEffect::frame() {
         fadeToBlackBy(leds, NUM_LEDS, 20);
 

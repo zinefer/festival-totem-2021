@@ -6,6 +6,7 @@ namespace effects {
         pulsePosition = 0;
     }
 
+    // A fast bright, white blink with a flicker triggered pretty randomly
     void LightningEffect::frame() {
         EVERY_N_MILLISECONDS( 20 ) {
             int segment = NUM_LEDS / 5;
@@ -28,7 +29,7 @@ namespace effects {
             } else {
                 if (random8(0, 10) == 2) {
                     for(int y = 5 * segment; y > 4 * segment; y--) {
-                    leds[y] += CRGB::White;
+                        leds[y] += CRGB::White;
                     }
                     pulsePosition = 1;
                 }

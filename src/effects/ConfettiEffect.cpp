@@ -6,6 +6,7 @@ namespace effects {
         hue = h;
     }
 
+    // random colored speckles that blink in and fade smoothly
     void ConfettiEffect::frame() {
         fadeToBlackBy(leds, NUM_LEDS, 10);
 

@@ -7,6 +7,7 @@ namespace effects {
         beatsPerMinute = 32;
     }
 
+    // Slowly pulse a single color - TODO: maybe some random flickers?
     void PulseEffect::frame() {
         for(int y = 0; y < NUM_LEDS; y++) {
             uint8_t beat = beatsin8(beatsPerMinute, 1, 254);
