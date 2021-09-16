@@ -23,7 +23,8 @@ function list-boards {
 }
 
 function compile {
-    $ARDUINO_CLI compile --fqbn esp32:esp32:esp32 .
+    $ARDUINO_CLI compile --fqbn esp32:esp32:esp32 . \
+        --build-properties build.partitions=minspiffs,upload.maximum_size=1966080 
 }
 
 function new {
