@@ -9,6 +9,7 @@ namespace effects {
     }
 
     void BeatEffect::frame() {
+        DEBUG_CORE_1 && Serial.println("BeatEffect");
         uint8_t beat = beatsin8(beatsPerMinute, 64, 255);
         int gHue = hue->readHue();
 

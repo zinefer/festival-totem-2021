@@ -44,6 +44,8 @@ namespace effects {
         if (millis() - last_tick < 30) return;
         last_tick = millis();
 
+        DEBUG_CORE_1 && Serial.println("FireEffect");
+
         // Step 1.  Cool down every cell a little
         for( int i = 0; i < NUM_LEDS; i++) {
             heat[i] = qsub8( heat[i],  random8(0, ((COOLING * 10) / NUM_LEDS) + 2) );

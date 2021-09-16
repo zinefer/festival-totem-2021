@@ -23,7 +23,7 @@ namespace effects {
 
     void BaseEffect::loop(void *pvParameters) {
         BaseEffect *_this = (BaseEffect *) pvParameters;   
-        for (;;){
+        while(_this->started) {
             _this->frame_start = millis();
 
             _this->frame();
@@ -39,6 +39,7 @@ namespace effects {
             unsigned long frame_duration = millis() - _this->frame_start;
             FastLED.delay((1000 - frame_duration) / FRAMES_PER_SECOND);
         }
+        vTaskDelete(NULL);
     }
 
     void BaseEffect::frame() {
@@ -48,6 +49,10 @@ namespace effects {
     void BaseEffect::stop() {
         vTaskDelete(Task1);
         started = false;
+    }
+
+    BaseEffect::~BaseEffect(){
+        stop();
     }
 
 }

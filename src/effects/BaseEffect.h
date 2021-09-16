@@ -27,7 +27,7 @@ namespace effects {
             OverlayState *overlay;
 
             static void loop(void *pvParameters);
-            void frame();
+            virtual void frame();
 
         protected:
             CRGB *leds;
@@ -36,6 +36,7 @@ namespace effects {
             bool started;
             
             BaseEffect(CRGB *l, OverlayState *o);
+            ~BaseEffect();
             void start();
             void stop();
     };

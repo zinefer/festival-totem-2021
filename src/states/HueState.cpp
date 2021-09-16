@@ -11,7 +11,7 @@ namespace states {
 
     void HueState::increment() {
         lock();
-        hue++;
+        hue = (hue + 1) % 256;
         releaseLock();
     };
 }

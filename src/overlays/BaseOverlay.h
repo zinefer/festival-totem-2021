@@ -13,7 +13,7 @@ namespace overlays {
             
         public:
             BaseOverlay(CRGB *l);
-            void frame();
+            virtual void frame();
     };
 
 }

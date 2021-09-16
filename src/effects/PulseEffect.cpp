@@ -9,6 +9,7 @@ namespace effects {
 
     // Slowly pulse a single color - TODO: maybe some random flickers?
     void PulseEffect::frame() {
+        DEBUG_CORE_1 && Serial.println("PulseEffect");
         for(int y = 0; y < NUM_LEDS; y++) {
             uint8_t beat = beatsin8(beatsPerMinute, 1, 254);
             leds[y] = CHSV(constrain(hue->readHue(), 1, 255), 255, 255-beat);

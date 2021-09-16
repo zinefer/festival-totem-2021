@@ -8,6 +8,7 @@ namespace effects {
 
     // random colored speckles that blink in and fade smoothly
     void ConfettiEffect::frame() {
+        DEBUG_CORE_1 && Serial.println("ConfettiEffect");
         fadeToBlackBy(leds, NUM_LEDS, 10);
 
         int pos = random16(NUM_LEDS);

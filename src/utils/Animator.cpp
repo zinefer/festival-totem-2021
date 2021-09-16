@@ -7,17 +7,20 @@ namespace utils {
         overlay = o;
         hue = h;
 
+        state = 0;
+        started = false;
         reset();
     }
 
     void Animator::tick() {
+        DEBUG_CORE_0 && Serial.println(state);
         
         switch (state) {
             case 0: // Rainbow for 40 seconds, glitter during the final 20
                 if (effect == NULL) {
                     stateDuration = 40000; // 40 seconds
                     effect = new RainbowEffect(leds, overlay, hue);
-                    overlayDelay = 20000;  // 20 seconds
+                    overlayDelay = stateDuration/2;  // 20 seconds
                     stateOverlay = new GlitterOverlay(leds);
                 }
             break;
@@ -77,18 +80,24 @@ namespace utils {
             break;
             case 10: // Chase for 20 seconds
                 if (effect == NULL) {
-                    stateDuration = 20000; // 40 seconds
+                    stateDuration = 20000; // 20 seconds
                     effect = new ChaseEffect(leds, overlay, hue, stateDuration);
                 }
             break;
             default:
+                DEBUG_CORE_0 && Serial.println("switch default");
                 state = 0;
+                return;
             break;
         }
 
-        if (effect->started == false) {
+        //stateDuration = 2000;
+
+        if (started == false) {
             effect->start();
+            started = true;
             stateStarted = millis();
+            return;
         }
         
         unsigned long currentDuration = millis() - stateStarted;
@@ -100,6 +109,7 @@ namespace utils {
 
             if (currentDuration >= stateDuration) {
                 effect->stop();
+                started = false;
                 reset();
                 state++;
             }
@@ -107,12 +117,12 @@ namespace utils {
     }
 
     void Animator::reset() {
-        state = 0;
         stateStarted = 0;
         overlayDelay = INT_MAX;
         effect = NULL;
         stateOverlay = NULL;
         overlay->set(NULL);
+        DEBUG_CORE_0 && Serial.println("Reset");
     }
 
 }

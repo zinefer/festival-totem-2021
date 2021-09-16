@@ -33,8 +33,9 @@ namespace utils {
 
             int state;
             int stateDuration;
-            int overlayDelay;            
+            int overlayDelay;
             unsigned long stateStarted;
+            bool started;
             CRGB *leds;
             BaseEffect *effect;
             BaseOverlay *stateOverlay;

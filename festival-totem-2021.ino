@@ -50,8 +50,9 @@ void setup() {
     
     animator = new Animator(leds, overlay, hue);
 
-    Serial.begin(19200);
+    Serial.begin(115200);
     delay(3000); // 3 seconds of delay for disaster recovery
+    DEBUG_CORE_0 && Serial.println("Booting");
     setupPositionSensor();
 
     FastLED.addLeds<LED_TYPE,DATA_PIN,CLK_PIN,COLOR_ORDER,DATA_RATE_MHZ(12)>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
@@ -59,18 +60,21 @@ void setup() {
 }
 
 void setupPositionSensor() {
+    DEBUG_CORE_0 && Serial.println("setupPositionSensor");
     /* Initialise the sensor */
-    if(!bno.begin())
-    {
-        /* There was a problem detecting the BNO055 ... check your connections */
-        Serial.print("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
-        while(1);
-    }
-    delay(1000);
-    bno.setExtCrystalUse(true);
+    // if(!bno.begin())
+    // {
+    //     /* There was a problem detecting the BNO055 ... check your connections */
+    //     Serial.print("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
+    //     while(1);
+    // }
+    // delay(1000);
+    // bno.setExtCrystalUse(true);
 }
 
 void loop() {
+    DEBUG_CORE_0 && Serial.println("MainLoop");
+
     updatePosition();
     
     animator->tick();
@@ -80,6 +84,7 @@ void loop() {
 }
 
 void updatePosition() {
-    imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
-    position->update(euler);
+    DEBUG_CORE_0 && Serial.println("updatePosition");
+    // imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
+    // position->update(euler);
 }
