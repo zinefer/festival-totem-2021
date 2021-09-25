@@ -7,7 +7,9 @@ namespace states {
     }
 
     void BaseState::lock() {
-        xSemaphoreTake( accessLock, ( TickType_t ) 100000 );
+        if (xSemaphoreTake( accessLock, ( TickType_t ) 100000 ) == false) {
+            Serial.println("# xSemaphoreTake ERROR");
+        }
     }
 
     void BaseState::releaseLock() {

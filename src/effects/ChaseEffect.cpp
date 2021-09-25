@@ -9,7 +9,7 @@ namespace effects {
     // 1 dot every other LED is turned off and move it along the strip
     void ChaseEffect::frame() {
         RainbowEffect::frame();
-        DEBUG_CORE_1 && Serial.println("ChaseEffect");
+        DEBUG_CORE_1 && Serial.println("# ChaseEffect");
         int offset = (duration / 75) % 3;
 
         for(int y = 0; y < NUM_LEDS; y++) {

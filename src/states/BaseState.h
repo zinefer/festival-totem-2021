@@ -3,6 +3,8 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/semphr.h"
 
+#include <Arduino.h>
+
 namespace states {
 
     class BaseState {

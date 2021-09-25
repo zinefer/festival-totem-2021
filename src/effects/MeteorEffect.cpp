@@ -10,7 +10,7 @@ namespace effects {
     // "Drip" a pixel down the strand, leaving behind a variably decaying trail
     void MeteorEffect::frame() {
         EVERY_N_MILLISECONDS( 20 ) {
-            DEBUG_CORE_1 && Serial.println("MeteorEffect");
+            DEBUG_CORE_1 && Serial.println("# MeteorEffect");
             
             position = (position + 1) % NUM_LEDS;
 

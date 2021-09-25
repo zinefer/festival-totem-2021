@@ -49,6 +49,7 @@ namespace effects {
     void BaseEffect::stop() {
         vTaskDelete(Task1);
         started = false;
+        overlay->releaseLock();
     }
 
     BaseEffect::~BaseEffect(){

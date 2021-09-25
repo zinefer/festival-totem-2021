@@ -8,7 +8,7 @@ namespace effects {
 
     // eight colored dots, weaving in and out of sync with each other
     void JuggleEffect::frame() {
-        DEBUG_CORE_1 && Serial.println("JuggleEffect");
+        DEBUG_CORE_1 && Serial.println("# JuggleEffect");
         fadeToBlackBy(leds, NUM_LEDS, 20);
 
         byte dothue = 0;

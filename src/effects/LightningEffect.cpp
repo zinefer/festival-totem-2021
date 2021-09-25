@@ -9,7 +9,7 @@ namespace effects {
     // A fast bright, white blink with a flicker triggered pretty randomly
     void LightningEffect::frame() {
         EVERY_N_MILLISECONDS( 20 ) {
-            DEBUG_CORE_1 && Serial.println("LightningEffect");
+            DEBUG_CORE_1 && Serial.println("# LightningEffect");
             int segment = NUM_LEDS / 5;
             fadeToBlackBy(leds, NUM_LEDS, 50);
 
