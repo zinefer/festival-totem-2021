@@ -1,4 +1,4 @@
-#include "BaseEffect.h"
+#include "BaseHueEffect.h"
 
 #include "../states/OverlayState.h"
 #include "../states/HueState.h"
@@ -7,10 +7,8 @@ using namespace states;
 
 namespace effects {
 
-    class JuggleEffect: public BaseEffect {
-        private:
-            HueState *hue;
-        
+    class JuggleEffect: public BaseHueEffect {
+        private:        
             void frame();
             
         public:

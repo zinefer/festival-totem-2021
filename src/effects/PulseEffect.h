@@ -1,4 +1,4 @@
-#include "BaseEffect.h"
+#include "BaseHueEffect.h"
 
 #include "../states/OverlayState.h"
 #include "../states/HueState.h"
@@ -7,9 +7,8 @@ using namespace states;
 
 namespace effects {
 
-    class PulseEffect: public BaseEffect {
+    class PulseEffect: public BaseHueEffect {
         private:
-            HueState *hue;
             uint8_t beatsPerMinute;
         
             void frame();

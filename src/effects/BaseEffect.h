@@ -38,7 +38,7 @@ namespace effects {
             BaseEffect(CRGB *l, OverlayState *o);
             ~BaseEffect();
             void start();
-            void stop();
+            virtual void stop();
     };
 
 }

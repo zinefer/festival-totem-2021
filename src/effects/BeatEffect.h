@@ -1,4 +1,4 @@
-#include "BaseEffect.h"
+#include "BaseHueEffect.h"
 
 #include "../states/OverlayState.h"
 #include "../states/HueState.h"
@@ -7,10 +7,8 @@ using namespace states;
 
 namespace effects {
 
-    class BeatEffect: public BaseEffect {
+    class BeatEffect: public BaseHueEffect {
         private:
-            HueState *hue;
-
             CRGBPalette16 palette;
             uint8_t beatsPerMinute;
         

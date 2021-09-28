@@ -2,9 +2,7 @@
 
 namespace effects {
 
-    LevelsEffect::LevelsEffect(CRGB *l, OverlayState *o, HueState *h) : BaseEffect(l, o) {
-        hue = h;
-    }
+    LevelsEffect::LevelsEffect(CRGB *l, OverlayState *o, HueState *h) : BaseHueEffect(l, o, h) { }
 
     // Randomly generate a percentage, set leds from 0->percentage to bright
     // let the rest fade to black
@@ -15,9 +13,10 @@ namespace effects {
         }
 
         fadeToBlackBy(leds, NUM_LEDS, 25);
-
+        
+        int h = hue->readHue();
         for(int y = 0; y < position; y++) {
-            leds[y] = CHSV(hue->readHue(), 255, 192);
+            leds[y] = CHSV(h, 255, 192);
         }
     }
 

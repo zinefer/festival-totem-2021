@@ -2,9 +2,7 @@
 
 namespace effects {
 
-    SinelonEffect::SinelonEffect(CRGB *l, OverlayState *o, HueState *h) : BaseEffect(l, o) {
-        hue = h;
-    }
+    SinelonEffect::SinelonEffect(CRGB *l, OverlayState *o, HueState *h) : BaseHueEffect(l, o, h) { }
 
     // a colored dot sweeping back and forth, with fading trails
     void SinelonEffect::frame() {

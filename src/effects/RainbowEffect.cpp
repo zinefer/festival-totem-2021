@@ -2,8 +2,7 @@
 
 namespace effects {
 
-    RainbowEffect::RainbowEffect(CRGB *l, OverlayState *o, HueState *h) : BaseEffect(l, o) {
-        hue = h;
+    RainbowEffect::RainbowEffect(CRGB *l, OverlayState *o, HueState *h) : BaseHueEffect(l, o, h) {
         rDelta = random8(5,35);
     }
 

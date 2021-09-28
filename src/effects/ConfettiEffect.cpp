@@ -2,9 +2,7 @@
 
 namespace effects {
 
-    ConfettiEffect::ConfettiEffect(CRGB *l, OverlayState *o, HueState *h) : BaseEffect(l, o) {
-        hue = h;
-    }
+    ConfettiEffect::ConfettiEffect(CRGB *l, OverlayState *o, HueState *h) : BaseHueEffect(l, o, h) { }
 
     // random colored speckles that blink in and fade smoothly
     void ConfettiEffect::frame() {

@@ -35,6 +35,8 @@ namespace effects {
             
             FastLED.show();
 
+            DEBUG_CORE_1 && Serial.println(LEDS.getFPS());
+
             // Manage framerate
             unsigned long frame_duration = millis() - _this->frame_start;
             FastLED.delay((1000 - frame_duration) / FRAMES_PER_SECOND);

@@ -1,6 +1,6 @@
 #ifndef RAINBOWEFFECT
 #define RAINBOWEFFECT
-#include "BaseEffect.h"
+#include "BaseHueEffect.h"
 
 #include "../states/OverlayState.h"
 #include "../states/HueState.h"
@@ -9,9 +9,8 @@ using namespace states;
 
 namespace effects {
 
-    class RainbowEffect: public BaseEffect {
+    class RainbowEffect: public BaseHueEffect {
         private:
-            HueState *hue;
             byte rDelta;
 
         protected:
