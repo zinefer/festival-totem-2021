@@ -14,4 +14,10 @@ namespace states {
         hue = (hue + 1) % 256;
         releaseLock();
     };
+
+    void HueState::set(uint8_t h) {
+        lock();
+        hue = (hue + h) % 256;
+        releaseLock();
+    };
 }
