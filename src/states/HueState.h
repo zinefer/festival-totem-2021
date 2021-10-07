@@ -13,6 +13,7 @@ namespace states {
         public:
             int readHue();
             void increment();
+            void set(uint8_t h);
     };
 
 }

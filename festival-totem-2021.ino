@@ -20,12 +20,15 @@
 
 #include "src/overlays/BaseOverlay.h"
 
+#include "src/ble/BleServer.h"
+
 #include "src/utils/Animator.h"
 
 using namespace states;
 using namespace effects;
 using namespace overlays;
 using namespace utils;
+using namespace ble;
 FASTLED_USING_NAMESPACE
 
 #include "src/config.h"
@@ -37,6 +40,9 @@ Adafruit_BNO055 bno = Adafruit_BNO055(55); // 9DoF Position Sensor
 OverlayState *overlay;
 PositionState *position;
 HueState *hue;
+
+// BLE
+BleServer *bleServer;
 
 CRGB leds[NUM_LEDS];
 int brightness = 25;
@@ -54,10 +60,33 @@ void setup() {
     delay(3000); // 3 seconds of delay for disaster recovery
     DEBUG_CORE_0 && Serial.println("Booting");
     setupPositionSensor();
+    bleServer = new BleServer(hue);
 
     FastLED.addLeds<LED_TYPE,DATA_PIN,CLK_PIN,COLOR_ORDER,DATA_RATE_MHZ(12)>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
     FastLED.setBrightness(brightness);
 }
+
+void loop() {
+    DEBUG_CORE_0 && Serial.println("MainLoop");
+
+    updatePosition();
+    
+    animator->tick();
+
+    // bluetooth stack will go into congestion, if too many packets are sent
+    // in 6 hours test i was able to go as low as 3ms
+    EVERY_N_MILLISECONDS( 10 ) { bleServer->tick(); }
+
+    // slowly cycle the "base color" through the rainbow
+    EVERY_N_MILLISECONDS( 20 ) { hue->increment(); }
+}
+
+void updatePosition() {
+    DEBUG_CORE_0 && Serial.println("updatePosition");
+    // imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
+    // position->update(euler);
+}
+
 
 void setupPositionSensor() {
     DEBUG_CORE_0 && Serial.println("setupPositionSensor");
@@ -70,21 +99,4 @@ void setupPositionSensor() {
     // }
     // delay(1000);
     // bno.setExtCrystalUse(true);
-}
-
-void loop() {
-    DEBUG_CORE_0 && Serial.println("MainLoop");
-
-    updatePosition();
-    
-    animator->tick();
-
-    // slowly cycle the "base color" through the rainbow
-    EVERY_N_MILLISECONDS( 20 ) { hue->increment(); }
-}
-
-void updatePosition() {
-    DEBUG_CORE_0 && Serial.println("updatePosition");
-    // imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
-    // position->update(euler);
 }
