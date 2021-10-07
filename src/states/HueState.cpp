@@ -17,7 +17,7 @@ namespace states {
 
     void HueState::set(uint8_t h) {
         lock();
-        hue = (hue + h) % 256;
+        hue = h % 256;
         releaseLock();
     };
 }

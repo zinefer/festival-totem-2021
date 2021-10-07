@@ -5,7 +5,6 @@
 
 #include "BleClientCallbacks.h"
 #include "BleHueCallbacks.h"
-//#include "BleHueCharacteristic.h"
 
 #include "../states/HueState.h"
 
@@ -22,6 +21,8 @@ namespace ble {
 
             BleClientCallbacks* clientCallbacks;
             bool isAdvertising = false;
+
+            BLECharacteristic* hueCharacteristic;
 
         public:
             BleServer(HueState *hueState);

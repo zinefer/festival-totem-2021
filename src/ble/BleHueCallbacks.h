@@ -15,5 +15,6 @@ namespace ble {
         public:
             BleHueCallbacks(HueState *h);
             void onWrite(BLECharacteristic *pCharacteristic);
+            void onRead(BLECharacteristic *pCharacteristic);
     };
 }

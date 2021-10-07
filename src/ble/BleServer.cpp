@@ -15,12 +15,10 @@ namespace ble {
         BLEService *pService = pServer->createService(SERVICE_UUID);
 
         // Create a BLE Characteristic
-        BLECharacteristic* hueCharacteristic = pService->createCharacteristic(
+        hueCharacteristic = pService->createCharacteristic(
                                 HUE_CHARACTERISTIC_UUID, 
                                 BLECharacteristic::PROPERTY_READ   |
-                                BLECharacteristic::PROPERTY_WRITE  //|
-                                //BLECharacteristic::PROPERTY_NOTIFY |
-                                //BLECharacteristic::PROPERTY_INDICATE
+                                BLECharacteristic::PROPERTY_WRITE
                             );
 
         // https://www.bluetooth.com/specifications/gatt/viewer?attributeXmlFile=org.bluetooth.descriptor.gatt.client_characteristic_configuration.xml
@@ -48,6 +46,7 @@ namespace ble {
         //     pCharacteristic->notify();
         //     value++;
         // }
+
         // disconnecting
         if (!clientCallbacks->connected && !isAdvertising) {
             // give the bluetooth stack the chance to get things ready
@@ -56,6 +55,7 @@ namespace ble {
                 isAdvertising = true;
             }
         }
+
         // connecting
         if (clientCallbacks->connected && isAdvertising) {
             // do stuff here on connecting
