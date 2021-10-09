@@ -13,11 +13,11 @@ namespace effects {
         protected:
             HueState *hue;
 
-        public:
-            void stop();
+        // public:
+            // void stop();
             
         public:
-            BaseHueEffect(CRGB *l, OverlayState *o, HueState *h);
+            BaseHueEffect(CRGB *l, HueState *h);
     };
 
 }

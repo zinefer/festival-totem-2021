@@ -12,7 +12,7 @@ namespace effects {
             void frame();
             
         public:
-            SinelonEffect(CRGB *l, OverlayState *o, HueState *h);
+            SinelonEffect(CRGB *l, HueState *h);
     };
 
 }

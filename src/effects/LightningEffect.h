@@ -13,7 +13,7 @@ namespace effects {
             void frame();
             
         public:
-            LightningEffect(CRGB *l, OverlayState *o);
+            LightningEffect(CRGB *l);
     };
 
 }

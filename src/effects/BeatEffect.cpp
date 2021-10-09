@@ -2,7 +2,7 @@
 
 namespace effects {
 
-    BeatEffect::BeatEffect(CRGB *l, OverlayState *o, HueState *h) : BaseHueEffect(l, o, h) {
+    BeatEffect::BeatEffect(CRGB *l, HueState *h) : BaseHueEffect(l, h) {
         beatsPerMinute = 62;
         palette = PartyColors_p;
     }

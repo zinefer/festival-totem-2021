@@ -2,7 +2,7 @@
 
 namespace overlays {
 
-    BaseOverlay::BaseOverlay(CRGB *l){
+    BaseOverlay::BaseOverlay(CRGB* l){
         leds = l;
     }
 

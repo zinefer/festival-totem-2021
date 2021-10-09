@@ -14,7 +14,7 @@ namespace effects {
             void frame();
             
         public:
-            PulseEffect(CRGB *l, OverlayState *o, HueState *h);
+            PulseEffect(CRGB *l, HueState *h);
     };
 
 }

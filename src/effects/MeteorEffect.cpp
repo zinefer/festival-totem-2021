@@ -2,7 +2,7 @@
 
 namespace effects {
 
-    MeteorEffect::MeteorEffect(CRGB *l, OverlayState *o, HueState *h) : BaseHueEffect(l, o, h) {
+    MeteorEffect::MeteorEffect(CRGB *l, HueState *h) : BaseHueEffect(l, h) {
         position = 0;
     }
 

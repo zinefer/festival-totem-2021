@@ -2,13 +2,13 @@
 
 namespace effects {
 
-    BaseHueEffect::BaseHueEffect(CRGB *l, OverlayState *o, HueState *h) : BaseEffect(l, o) {
+    BaseHueEffect::BaseHueEffect(CRGB *l, HueState *h) : BaseEffect(l) {
         hue = h;
     }
 
-    void BaseHueEffect::stop() {
-        BaseEffect::stop();
-        hue->releaseLock();
-    }
+    // void BaseHueEffect::stop() {
+    //     BaseEffect::stop();
+    //     hue->releaseLock();
+    // }
 
 }

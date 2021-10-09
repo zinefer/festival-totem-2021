@@ -2,7 +2,7 @@
 
 namespace effects {
 
-    LightningEffect::LightningEffect(CRGB *l, OverlayState *o) : BaseEffect(l, o) {
+    LightningEffect::LightningEffect(CRGB *l) : BaseEffect(l) {
         pulsePosition = 0;
     }
 

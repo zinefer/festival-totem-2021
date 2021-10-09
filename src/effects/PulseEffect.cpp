@@ -2,7 +2,7 @@
 
 namespace effects {
 
-    PulseEffect::PulseEffect(CRGB *l, OverlayState *o, HueState *h) : BaseHueEffect(l, o, h) {
+    PulseEffect::PulseEffect(CRGB *l, HueState *h) : BaseHueEffect(l, h) {
         beatsPerMinute = 32;
     }
 

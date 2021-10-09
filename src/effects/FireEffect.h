@@ -28,7 +28,7 @@ namespace effects {
             void frame();
             
         public:
-            FireEffect(CRGB *l, OverlayState *o);
+            FireEffect(CRGB *l);
     };
 
 }

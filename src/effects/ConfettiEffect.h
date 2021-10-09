@@ -12,7 +12,7 @@ namespace effects {
             void frame();
             
         public:
-            ConfettiEffect(CRGB *l, OverlayState *o, HueState *h);
+            ConfettiEffect(CRGB *l, HueState *h);
     };
 
 }

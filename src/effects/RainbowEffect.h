@@ -17,7 +17,7 @@ namespace effects {
             void frame();
             
         public:
-            RainbowEffect(CRGB *l, OverlayState *o, HueState *h);
+            RainbowEffect(CRGB *l, HueState *h);
     };
 
 }

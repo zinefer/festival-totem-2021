@@ -22,12 +22,12 @@
 
 #include "src/ble/BleServer.h"
 
-#include "src/utils/Animator.h"
+#include "src/animator/Animator.h"
 
+using namespace animator;
 using namespace states;
 using namespace effects;
 using namespace overlays;
-using namespace utils;
 using namespace ble;
 FASTLED_USING_NAMESPACE
 
@@ -37,24 +37,24 @@ FASTLED_USING_NAMESPACE
 Adafruit_BNO055 bno = Adafruit_BNO055(55); // 9DoF Position Sensor
 
 // States
-OverlayState *overlay;
-PositionState *position;
-HueState *hue;
+OverlayState* overlay;
+PositionState* position;
+HueState* hue;
 
 // BLE
-BleServer *bleServer;
+BleServer* bleServer;
 
 CRGB leds[NUM_LEDS];
 int brightness = 25;
 
-Animator *animator;
+Animator* anim;
 
 void setup() {
     overlay = new OverlayState();
     position = new PositionState();
     hue = new HueState();
     
-    animator = new Animator(leds, overlay, hue);
+    anim = new Animator(leds, overlay, hue);
 
     Serial.begin(115200);
     delay(3000); // 3 seconds of delay for disaster recovery
@@ -64,14 +64,14 @@ void setup() {
 
     FastLED.addLeds<LED_TYPE,DATA_PIN,CLK_PIN,COLOR_ORDER,DATA_RATE_MHZ(12)>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
     FastLED.setBrightness(brightness);
+
+    anim->start();
 }
 
 void loop() {
     DEBUG_CORE_0 && Serial.println("MainLoop");
 
     updatePosition();
-    
-    animator->tick();
 
     // bluetooth stack will go into congestion, if too many packets are sent
     // in 6 hours test i was able to go as low as 3ms

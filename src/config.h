@@ -8,5 +8,7 @@
 // 24
 // 25
 
+#define EFFECT_LIST_MAX 32
+
 #define DEBUG_CORE_0 false
 #define DEBUG_CORE_1 false

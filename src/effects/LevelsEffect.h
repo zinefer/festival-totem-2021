@@ -14,7 +14,7 @@ namespace effects {
             void frame();
             
         public:
-            LevelsEffect(CRGB *l, OverlayState *o, HueState *h);
+            LevelsEffect(CRGB* l, HueState* h);
     };
 
 }

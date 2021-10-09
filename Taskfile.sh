@@ -11,6 +11,7 @@ function install {
     lib-install 'FastLED@3.4.0'
     lib-install 'Adafruit BNO055@1.5.0'
     lib-install 'FreeRTOS@10.4.4-2'
+    lib-install 'Vector@1.2.2'
 }
 
 function lib-install {

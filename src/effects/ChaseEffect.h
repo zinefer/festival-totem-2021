@@ -10,11 +10,10 @@ namespace effects {
     class ChaseEffect: public RainbowEffect {
         private:
             int duration;
-
             void frame();
             
         public:
-            ChaseEffect(CRGB *l, OverlayState *o, HueState *h, int d);
+            ChaseEffect(CRGB* l, HueState* h, int d);
     };
 
 }

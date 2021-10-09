@@ -15,7 +15,7 @@ namespace effects {
             void frame();
             
         public:
-            MeteorEffect(CRGB *l, OverlayState *o, HueState *h);
+            MeteorEffect(CRGB *l, HueState *h);
     };
 
 }

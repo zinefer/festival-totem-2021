@@ -2,7 +2,7 @@
 
 namespace effects {
 
-    JuggleEffect::JuggleEffect(CRGB *l, OverlayState *o, HueState *h) : BaseHueEffect(l, o, h) { }
+    JuggleEffect::JuggleEffect(CRGB *l, HueState *h) : BaseHueEffect(l, h) { }
 
     // eight colored dots, weaving in and out of sync with each other
     void JuggleEffect::frame() {

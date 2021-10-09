@@ -12,7 +12,7 @@ namespace effects {
             void frame();
             
         public:
-            JuggleEffect(CRGB *l, OverlayState *o, HueState *h);
+            JuggleEffect(CRGB *l, HueState *h);
     };
 
 }

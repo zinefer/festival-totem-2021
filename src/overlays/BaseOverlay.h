@@ -9,10 +9,10 @@ namespace overlays {
 
     class BaseOverlay {
         protected:
-            CRGB *leds;
+            CRGB* leds;
             
         public:
-            BaseOverlay(CRGB *l);
+            BaseOverlay(CRGB* l);
             virtual void frame();
     };
 

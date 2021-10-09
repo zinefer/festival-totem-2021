@@ -2,7 +2,7 @@
 
 namespace effects {
 
-    ChaseEffect::ChaseEffect(CRGB *l, OverlayState *o, HueState *h, int d) : RainbowEffect(l, o, h) {
+    ChaseEffect::ChaseEffect(CRGB *l, HueState *h, int d) : RainbowEffect(l, h) {
         duration = d;
     }
 

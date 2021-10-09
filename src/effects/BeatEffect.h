@@ -15,7 +15,7 @@ namespace effects {
             void frame();
             
         public:
-            BeatEffect(CRGB *l, OverlayState *o, HueState *h);
+            BeatEffect(CRGB *l, HueState *h);
     };
 
 }

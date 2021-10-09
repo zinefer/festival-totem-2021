@@ -2,7 +2,7 @@
 
 namespace effects {
 
-    LevelsEffect::LevelsEffect(CRGB *l, OverlayState *o, HueState *h) : BaseHueEffect(l, o, h) { }
+    LevelsEffect::LevelsEffect(CRGB *l, HueState *h) : BaseHueEffect(l, h) { }
 
     // Randomly generate a percentage, set leds from 0->percentage to bright
     // let the rest fade to black
