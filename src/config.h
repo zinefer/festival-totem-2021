@@ -12,8 +12,12 @@
 #define CONFIG_CLK_PIN       14
 #define CONFIG_PULSE_WIDTH   5
 
-// 24
-// 25
+// HOTFIX INPUT
+#define HOTFIX_INPUT_SW      25
+#define HOTFIX_INPUT_CAPA    T9
+#define HOTFIX_INPUT_CAPB    T8
+#define HOTFIX_INPUT_CAPC    T7
+#define HOTFIX_THRESHOLD     20
 
 #define EFFECT_LIST_MAX 32
 

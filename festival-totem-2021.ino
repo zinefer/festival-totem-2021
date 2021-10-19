@@ -58,6 +58,7 @@ void setup() {
     // SETUP
     //setupConfigInput();
     //setupPositionSensor();
+    setupHotfixInput();
     bleServer = new BleServer(hue);
 
     FastLED.addLeds<LED_TYPE,DATA_PIN,CLK_PIN,COLOR_ORDER,DATA_RATE_MHZ(12)>(leds, NUM_LEDS);
@@ -71,8 +72,6 @@ void setup() {
 void loop() {
     DEBUG_CORE_0 && Serial.println("MainLoop");
 
-    updatePosition();
-
     // bluetooth stack will go into congestion, if too many packets are sent
     // in 6 hours test i was able to go as low as 3ms
     EVERY_N_MILLISECONDS( 10 ) { bleServer->tick(); }
@@ -81,10 +80,25 @@ void loop() {
     EVERY_N_MILLISECONDS( 20 ) { hue->increment(); }
 
     //EVERY_N_MILLISECONDS( 20 ) { pollConfigInput(); }
+    //EVERY_N_MILLISECONDS( 20 ) { pollPosition(); }
+    EVERY_N_MILLISECONDS( 20 ) { pollHotfixInput(); }
 }
 
-void updatePosition() {
-    DEBUG_CORE_0 && Serial.println("updatePosition");
+void setupPositionSensor() {
+    DEBUG_CORE_0 && Serial.println("setupPositionSensor");
+    /* Initialise the sensor */
+    if(!bno.begin())
+    {
+        /* There was a problem detecting the BNO055 ... check your connections */
+        Serial.print("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
+        while(1);
+    }
+    delay(1000);
+    bno.setExtCrystalUse(true);
+}
+
+void pollPosition() {
+    DEBUG_CORE_0 && Serial.println("pollPosition");
     imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
     position->update(euler);
 }
@@ -93,6 +107,32 @@ void setupConfigInput() {
     pinMode(CONFIG_LOAD_PIN, OUTPUT);
     pinMode(CONFIG_CLK_PIN, OUTPUT);
     pinMode(CONFIG_DATA_PIN, INPUT);
+}
+
+void setupHotfixInput() {
+    pinMode(HOTFIX_INPUT_SW, INPUT_PULLUP);
+}
+
+void pollHotfixInput() {
+    byte toggleSw = digitalRead(HOTFIX_INPUT_SW);
+    DEBUG_CORE_0 && Serial.print("toggleSw - ");
+    DEBUG_CORE_0 && Serial.println(toggleSw);
+
+    int capA = touchReadClean(HOTFIX_INPUT_CAPA);
+    DEBUG_CORE_0 && Serial.print("CAPA - ");
+    DEBUG_CORE_0 && Serial.println(capA);
+
+    int capB = touchReadClean(HOTFIX_INPUT_CAPB);
+    DEBUG_CORE_0 && Serial.print("CAPB - ");
+    DEBUG_CORE_0 && Serial.println(capB);
+
+    int capC = touchReadClean(HOTFIX_INPUT_CAPC);
+    DEBUG_CORE_0 && Serial.print("CAPC - ");
+    DEBUG_CORE_0 && Serial.println(capC);
+}
+
+int touchReadClean(uint8_t pin) {
+    return max(touchRead(pin), touchRead(pin));
 }
 
 void pollConfigInput() {
@@ -115,18 +155,4 @@ void pollConfigInput() {
         delayMicroseconds(CONFIG_PULSE_WIDTH);
         digitalWrite(CONFIG_CLK_PIN, LOW);
     }
-}
-
-
-void setupPositionSensor() {
-    DEBUG_CORE_0 && Serial.println("setupPositionSensor");
-    /* Initialise the sensor */
-    if(!bno.begin())
-    {
-        /* There was a problem detecting the BNO055 ... check your connections */
-        Serial.print("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
-        while(1);
-    }
-    delay(1000);
-    bno.setExtCrystalUse(true);
 }
