@@ -75,7 +75,6 @@ namespace animator {
                     overlay->frame();
                 }
             }
-
         } else {
 
             // instantiate current effect

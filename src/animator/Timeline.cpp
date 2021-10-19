@@ -37,10 +37,10 @@ namespace animator {
             20000
         ));
 
-        add(new KeyFrame(
-            Effect::Levels,
-            20000
-        ));
+        // add(new KeyFrame(
+        //     Effect::Levels,
+        //     20000
+        // ));
 
         add(new KeyFrame(
             Effect::Meteor,

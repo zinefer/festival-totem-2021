@@ -39,26 +39,32 @@ HueState* hue;
 BleServer* bleServer;
 
 CRGB leds[NUM_LEDS];
-int brightness = 25;
+int brightness = 35;
 
 Animator* anim;
 
 void setup() {
+    // INITIALIZE    
     overlay = new OverlayState();
     position = new PositionState();
     hue = new HueState();
-    
+       
     anim = new Animator(leds, overlay, hue);
 
     Serial.begin(115200);
     delay(3000); // 3 seconds of delay for disaster recovery
     DEBUG_CORE_0 && Serial.println("Booting");
-    setupPositionSensor();
+    
+    // SETUP
+    //setupConfigInput();
+    //setupPositionSensor();
     bleServer = new BleServer(hue);
 
-    FastLED.addLeds<LED_TYPE,DATA_PIN,CLK_PIN,COLOR_ORDER,DATA_RATE_MHZ(12)>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
+    FastLED.addLeds<LED_TYPE,DATA_PIN,CLK_PIN,COLOR_ORDER,DATA_RATE_MHZ(12)>(leds, NUM_LEDS);
+    FastLED.setCorrection(TypicalLEDStrip);
     FastLED.setBrightness(brightness);
 
+    // START OTHER THREAD
     anim->start();
 }
 
@@ -73,24 +79,54 @@ void loop() {
 
     // slowly cycle the "base color" through the rainbow
     EVERY_N_MILLISECONDS( 20 ) { hue->increment(); }
+
+    //EVERY_N_MILLISECONDS( 20 ) { pollConfigInput(); }
 }
 
 void updatePosition() {
     DEBUG_CORE_0 && Serial.println("updatePosition");
-    // imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
-    // position->update(euler);
+    imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
+    position->update(euler);
+}
+
+void setupConfigInput() {
+    pinMode(CONFIG_LOAD_PIN, OUTPUT);
+    pinMode(CONFIG_CLK_PIN, OUTPUT);
+    pinMode(CONFIG_DATA_PIN, INPUT);
+}
+
+void pollConfigInput() {
+    byte bitVal;
+    unsigned int bytesVal = 0;
+
+    digitalWrite(CONFIG_LOAD_PIN, LOW);
+    delayMicroseconds(CONFIG_PULSE_WIDTH);
+    digitalWrite(CONFIG_LOAD_PIN, HIGH);
+
+    for(int i = 0; i < 8; i++)
+    {
+        bitVal = digitalRead(CONFIG_DATA_PIN);
+
+        DEBUG_CORE_0 && Serial.print("bitVal - ");
+        DEBUG_CORE_0 && Serial.println(bitVal);
+
+        // /* Pulse the Clock (rising edge shifts the next bit).
+        digitalWrite(CONFIG_CLK_PIN, HIGH);
+        delayMicroseconds(CONFIG_PULSE_WIDTH);
+        digitalWrite(CONFIG_CLK_PIN, LOW);
+    }
 }
 
 
 void setupPositionSensor() {
     DEBUG_CORE_0 && Serial.println("setupPositionSensor");
     /* Initialise the sensor */
-    // if(!bno.begin())
-    // {
-    //     /* There was a problem detecting the BNO055 ... check your connections */
-    //     Serial.print("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
-    //     while(1);
-    // }
-    // delay(1000);
-    // bno.setExtCrystalUse(true);
+    if(!bno.begin())
+    {
+        /* There was a problem detecting the BNO055 ... check your connections */
+        Serial.print("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
+        while(1);
+    }
+    delay(1000);
+    bno.setExtCrystalUse(true);
 }
