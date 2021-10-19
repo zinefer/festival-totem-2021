@@ -49,7 +49,9 @@ namespace animator {
 
         add(new KeyFrame(
             Effect::Pulse,
-            20000
+            Overlay::Glitter,
+            20000,
+            10000
         ));
 
         add(new KeyFrame(
@@ -59,6 +61,11 @@ namespace animator {
 
         add(new KeyFrame(
             Effect::Chase,
+            20000
+        ));
+
+        add(new KeyFrame(
+            Effect::BlendWave,
             20000
         ));
 

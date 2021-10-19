@@ -1,12 +1,13 @@
-#include "BaseEffect.h"
+#include "BaseHueEffect.h"
 
 #include "../states/OverlayState.h"
+#include "../states/HueState.h"
 
 using namespace states;
 
 namespace effects {
 
-    class FireEffect: public BaseEffect {
+    class FireEffect: public BaseHueEffect {
         private:
             unsigned long last_tick;
             
@@ -26,12 +27,14 @@ namespace effects {
             bool gReverseDirection = false;
 
             CRGBPalette16 palette;
+            bool huePalette = false;
             String paletteName;
 
             void frame();
+            void updateHuePalette();
             
         public:
-            FireEffect(CRGB *l);
+            FireEffect(CRGB *l, HueState *h);
     };
 
 }

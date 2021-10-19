@@ -15,6 +15,7 @@ enum class Effect : uint8_t  {
     Meteor,
     Pulse,
     Lightning,
-    Chase
+    Chase,
+    BlendWave
 };
 #endif

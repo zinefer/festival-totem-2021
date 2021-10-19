@@ -12,6 +12,7 @@ namespace effects {
     class RainbowEffect: public BaseHueEffect {
         private:
             byte rDelta;
+            bool dynaDelta = false;
 
         protected:
             void frame();

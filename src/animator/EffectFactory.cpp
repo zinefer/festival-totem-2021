@@ -27,7 +27,7 @@ namespace animator {
                 return new BeatEffect(leds, hue);
             break;
             case Effect::Fire:
-                return new FireEffect(leds);
+                return new FireEffect(leds, hue);
             break;
             case Effect::Levels:
                 return new LevelsEffect(leds, hue);
@@ -44,6 +44,8 @@ namespace animator {
             case Effect::Chase:
                 return new ChaseEffect(leds, hue, duration);
             break;
+            case Effect::BlendWave:
+                return new BlendWaveEffect(leds, hue);
         }
         
         return new RainbowEffect(leds, hue); // This is a prollem

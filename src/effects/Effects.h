@@ -9,3 +9,4 @@
 #include "../effects/PulseEffect.h"
 #include "../effects/RainbowEffect.h"
 #include "../effects/SinelonEffect.h"
+#include "../effects/BlendWaveEffect.h"

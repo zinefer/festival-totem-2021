@@ -2,10 +2,8 @@
 
 namespace effects {
 
-    FireEffect::FireEffect(CRGB *l) : BaseEffect(l) {
-
+    FireEffect::FireEffect(CRGB *l, HueState *h) : BaseHueEffect(l, h) {
         int randPalette = random16(10);
-
         switch(randPalette) {
             default:
             case 0:
@@ -25,12 +23,12 @@ namespace effects {
                 paletteName = "black green purple orange";
             break;
             case 4:
-                palette = CRGBPalette16( CRGB::Black, CRGB::Blue, CRGB::Purple,  CRGB::Red);
-                paletteName = "black blue purple red";
+                palette = CRGBPalette16( CRGB::Black, CRGB::Blue, CRGB::Purple);
+                paletteName = "black blue purple";
             break;
             case 5:
-                palette = CRGBPalette16( CRGB::LightGoldenrodYellow, CRGB::Magenta, CRGB::DarkViolet);
-                paletteName = "yellow magenta purple";
+                palette = CRGBPalette16( CRGB::DarkViolet, CRGB::LightGoldenrodYellow, CRGB::Magenta);
+                paletteName = "darkviolet yellow magenta";
             break;
             case 6:
                 palette = CRGBPalette16( CRGB::Black, CRGB::Magenta, CRGB::Green, CRGB::Blue);
@@ -42,15 +40,17 @@ namespace effects {
             break;
             case 9:
                 paletteName = "hue";
-                // TODO: gHue?
-                static uint8_t hue = 0;
-                hue++;
-                CRGB darkcolor  = CHSV(hue, 255, 192); // pure hue, three-quarters brightness
-                CRGB lightcolor = CHSV(hue, 128, 255); // half 'whitened', full brightness
-                palette = CRGBPalette16( CRGB::Black, darkcolor, lightcolor, CRGB::White);
+                huePalette = true;
             break;   
         }
      }
+
+    void FireEffect::updateHuePalette() {
+        int gHue = hue->readHue();
+        CRGB darkcolor  = CHSV(gHue, 255, 255); // pure hue
+        CRGB lightcolor = CHSV(gHue, 255, 128); // half 'whitened'
+        palette = CRGBPalette16( CRGB::Black, darkcolor, lightcolor);
+    }
 
     // Fire2012 by Mark Kriegsman, July 2012
     // as part of "Five Elements" shown here: http://youtu.be/knWiGsmgycY
@@ -94,6 +94,10 @@ namespace effects {
 
         DEBUG_CORE_1 && Serial.print("# FireEffect - ");
         DEBUG_CORE_1 && Serial.println(paletteName);
+
+        if (huePalette) {
+            updateHuePalette();
+        }
 
         // Step 1.  Cool down every cell a little
         for( int i = 0; i < NUM_LEDS; i++) {
