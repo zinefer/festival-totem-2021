@@ -14,6 +14,7 @@ namespace animator {
     KeyFrame::KeyFrame(Effect _effect, int _duration) {
         effect = _effect;
         duration = _duration;
+        overlay = Overlay::None;
     }
 
 }

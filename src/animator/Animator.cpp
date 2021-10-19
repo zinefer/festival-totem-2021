@@ -57,19 +57,18 @@ namespace animator {
 
         // if we have an effect
         if (effect) {
-
-            if (Overlay::None != frame->overlay && elapsed >= frame->overlayDelay) {
-                if (!overlay) {
-                    overlay = overlayFactory->build(frame->overlay);
-                }
-            }
-
             if (elapsed >= frame->duration) {
                 DEBUG_CORE_1 && Serial.println("Advance Timeline");
                 effect = NULL;
                 overlay = NULL;
                 timeline->advance();
             } else {
+                if (Overlay::None != frame->overlay && elapsed >= frame->overlayDelay) {
+                    if (!overlay) {
+                        overlay = overlayFactory->build(frame->overlay);
+                    }
+                }
+
                 // tick effect and overlay
                 effect->frame();
                 if (overlay) {

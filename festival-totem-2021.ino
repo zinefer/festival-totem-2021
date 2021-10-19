@@ -16,17 +16,11 @@
 #include "src/states/HueState.h"
 #include "src/states/SerialState.h"
 
-#include "src/effects/BaseEffect.h"
-
-#include "src/overlays/BaseOverlay.h"
-
 #include "src/ble/BleServer.h"
-
 #include "src/animator/Animator.h"
 
 using namespace animator;
 using namespace states;
-using namespace effects;
 using namespace overlays;
 using namespace ble;
 FASTLED_USING_NAMESPACE
