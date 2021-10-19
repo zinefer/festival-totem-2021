@@ -25,6 +25,9 @@ namespace effects {
 
             bool gReverseDirection = false;
 
+            CRGBPalette16 palette;
+            String paletteName;
+
             void frame();
             
         public:

@@ -2,7 +2,55 @@
 
 namespace effects {
 
-    FireEffect::FireEffect(CRGB *l) : BaseEffect(l) { }
+    FireEffect::FireEffect(CRGB *l) : BaseEffect(l) {
+
+        int randPalette = random16(10);
+
+        switch(randPalette) {
+            default:
+            case 0:
+                palette = HeatColors_p;
+                paletteName = "heat";
+            break;
+            case 1:
+                palette = CRGBPalette16( CRGB::Black, CRGB::Blue, CRGB::Aqua,  CRGB::White);
+                paletteName = "black blue aqua white";
+            break;
+            case 2:
+                palette = CRGBPalette16( CRGB::Black, CRGB::Green, CRGB::GreenYellow,  CRGB::Yellow);
+                paletteName = "black green yellow";
+            break;
+            case 3:
+                palette = CRGBPalette16( CRGB::Black, CRGB::Green, CRGB::Purple,  CRGB::Orange);
+                paletteName = "black green purple orange";
+            break;
+            case 4:
+                palette = CRGBPalette16( CRGB::Black, CRGB::Blue, CRGB::Purple,  CRGB::Red);
+                paletteName = "black blue purple red";
+            break;
+            case 5:
+                palette = CRGBPalette16( CRGB::LightGoldenrodYellow, CRGB::Magenta, CRGB::DarkViolet);
+                paletteName = "yellow magenta purple";
+            break;
+            case 6:
+                palette = CRGBPalette16( CRGB::Black, CRGB::Magenta, CRGB::Green, CRGB::Blue);
+                paletteName = "black magenta green blue";
+            break;
+            case 8:
+                palette = CRGBPalette16( CRGB::Black, CRGB::Red);
+                paletteName = "black red";
+            break;
+            case 9:
+                paletteName = "hue";
+                // TODO: gHue?
+                static uint8_t hue = 0;
+                hue++;
+                CRGB darkcolor  = CHSV(hue, 255, 192); // pure hue, three-quarters brightness
+                CRGB lightcolor = CHSV(hue, 128, 255); // half 'whitened', full brightness
+                palette = CRGBPalette16( CRGB::Black, darkcolor, lightcolor, CRGB::White);
+            break;   
+        }
+     }
 
     // Fire2012 by Mark Kriegsman, July 2012
     // as part of "Five Elements" shown here: http://youtu.be/knWiGsmgycY
@@ -44,7 +92,8 @@ namespace effects {
         if (millis() - last_tick < 30) return;
         last_tick = millis();
 
-        DEBUG_CORE_1 && Serial.println("# FireEffect");
+        DEBUG_CORE_1 && Serial.print("# FireEffect - ");
+        DEBUG_CORE_1 && Serial.println(paletteName);
 
         // Step 1.  Cool down every cell a little
         for( int i = 0; i < NUM_LEDS; i++) {
@@ -64,7 +113,8 @@ namespace effects {
 
         // Step 4.  Map from heat cells to LED colors
         for( int j = 0; j < NUM_LEDS; j++) {
-            CRGB color = HeatColor( heat[j] );
+            byte val = scale8( heat[j], 240);
+            CRGB color = ColorFromPalette( palette, val);
             int pixelnumber;
             
             if( gReverseDirection ) {
