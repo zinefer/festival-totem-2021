@@ -10,7 +10,10 @@ namespace effects {
     void ChaseEffect::frame() {
         RainbowEffect::frame();
         DEBUG_CORE_1 && Serial.println("# ChaseEffect");
-        int offset = beatsin16(20, 1, 3);
+        
+        EVERY_N_MILLISECONDS( 100 ) { 
+            offset = (offset + 1) % 3;
+        }
 
         for(int y = 0; y < NUM_LEDS; y++) {
             if (y % 3 == 0) {

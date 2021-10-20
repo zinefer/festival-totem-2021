@@ -13,7 +13,8 @@ namespace effects {
         private:
             byte rDelta;
             bool dynaDelta = false;
-
+            byte dynaDeltaBeat;
+            
         protected:
             void frame();
             
