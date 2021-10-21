@@ -10,6 +10,7 @@ namespace effects {
     class ChaseEffect: public RainbowEffect {
         private:
             int duration;
+            int offset;
             void frame();
             
         public:
