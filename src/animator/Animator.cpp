@@ -2,8 +2,8 @@
 
 namespace animator {
     
-    Animator::Animator(CRGB* leds, OverlayState* overlayState, HueState* hueState) {
-        effectFactory = new EffectFactory(leds, overlayState, hueState);
+    Animator::Animator(CRGB* leds, ConfigState* configState, OverlayState* overlayState, HueState* hueState) {
+        effectFactory = new EffectFactory(leds, configState, overlayState, hueState);
         overlayFactory = new OverlayFactory(leds);
 
         timeline = new Timeline();
@@ -57,11 +57,11 @@ namespace animator {
 
         // if we have an effect
         if (effect) {
-            if (elapsed >= frame->duration) {
-                DEBUG_CORE_1 && Serial.println("Advance Timeline");
-                effect = NULL;
-                overlay = NULL;
-                timeline->advance();
+            if(effect->stopped) {
+                DEBUG_CORE_1 && Serial.println("Effect stopped internally");
+                advanceTimeline();
+            } else if (elapsed >= frame->duration) {
+                advanceTimeline();
             } else {
                 if (Overlay::None != frame->overlay && elapsed >= frame->overlayDelay) {
                     if (!overlay) {
@@ -84,5 +84,12 @@ namespace animator {
         }
 
     };
+
+    void Animator::advanceTimeline() {
+        DEBUG_CORE_1 && Serial.println("Advance Timeline");
+        effect = NULL;
+        overlay = NULL;
+        timeline->advance();
+    }
 
 }

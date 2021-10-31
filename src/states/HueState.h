@@ -9,7 +9,9 @@ namespace states {
     class HueState: public BaseState {
         private:
             int hue = 0;
-            
+            int hueOverride = 0;
+            unsigned long overrideTime = 0;
+
         public:
             int readHue();
             void increment();

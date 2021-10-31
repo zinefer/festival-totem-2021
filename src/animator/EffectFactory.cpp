@@ -2,8 +2,9 @@
 
 namespace animator {
 
-    EffectFactory::EffectFactory(CRGB* l, OverlayState* o, HueState* h) {
+    EffectFactory::EffectFactory(CRGB* l, ConfigState* c, OverlayState* o, HueState* h) {
         leds = l;
+        config = c;
         overlay = o;
         hue = h;
     };
@@ -39,7 +40,7 @@ namespace animator {
                 return new PulseEffect(leds, hue);
             break;
             case Effect::Lightning:
-                return new LightningEffect(leds);
+                return new LightningEffect(leds, config);
             break;
             case Effect::Chase:
                 return new ChaseEffect(leds, hue, duration);

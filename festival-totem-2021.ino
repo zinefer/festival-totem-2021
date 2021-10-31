@@ -31,6 +31,7 @@ FASTLED_USING_NAMESPACE
 Adafruit_BNO055 bno = Adafruit_BNO055(55); // 9DoF Position Sensor
 
 // States
+ConfigState* config;
 OverlayState* overlay;
 PositionState* position;
 HueState* hue;
@@ -38,18 +39,22 @@ HueState* hue;
 // BLE
 BleServer* bleServer;
 
+// Hotfix Input
+byte lightningSw = 3; // Set go 3 to make initial state get set
+
 CRGB leds[NUM_LEDS];
-int brightness = 35;
+int brightness = 50;
 
 Animator* anim;
 
 void setup() {
     // INITIALIZE    
+    config = new ConfigState();
     overlay = new OverlayState();
     position = new PositionState();
     hue = new HueState();
        
-    anim = new Animator(leds, overlay, hue);
+    anim = new Animator(leds, config, overlay, hue);
 
     Serial.begin(115200);
     delay(3000); // 3 seconds of delay for disaster recovery
@@ -59,7 +64,7 @@ void setup() {
     //setupConfigInput();
     //setupPositionSensor();
     setupHotfixInput();
-    bleServer = new BleServer(hue);
+    //bleServer = new BleServer(hue);
 
     FastLED.addLeds<LED_TYPE,DATA_PIN,CLK_PIN,COLOR_ORDER,DATA_RATE_MHZ(12)>(leds, NUM_LEDS);
     FastLED.setCorrection(TypicalLEDStrip);
@@ -74,7 +79,7 @@ void loop() {
 
     // bluetooth stack will go into congestion, if too many packets are sent
     // in 6 hours test i was able to go as low as 3ms
-    EVERY_N_MILLISECONDS( 10 ) { bleServer->tick(); }
+    //EVERY_N_MILLISECONDS( 10 ) { bleServer->tick(); }
 
     // slowly cycle the "base color" through the rainbow
     EVERY_N_MILLISECONDS( 20 ) { hue->increment(); }
@@ -118,21 +123,20 @@ void pollHotfixInput() {
     DEBUG_CORE_0 && Serial.print("toggleSw - ");
     DEBUG_CORE_0 && Serial.println(toggleSw);
 
-    int capA = touchReadClean(HOTFIX_INPUT_CAPA);
-    DEBUG_CORE_0 && Serial.print("CAPA - ");
-    DEBUG_CORE_0 && Serial.println(capA);
-
-    int capB = touchReadClean(HOTFIX_INPUT_CAPB);
-    DEBUG_CORE_0 && Serial.print("CAPB - ");
-    DEBUG_CORE_0 && Serial.println(capB);
-
-    int capC = touchReadClean(HOTFIX_INPUT_CAPC);
-    DEBUG_CORE_0 && Serial.print("CAPC - ");
-    DEBUG_CORE_0 && Serial.println(capC);
+    if (toggleSw != lightningSw) {
+        config->setLightningEnabled(toggleSw);
+        lightningSw = toggleSw;
+    }
 }
 
-int touchReadClean(uint8_t pin) {
-    return max(touchRead(pin), touchRead(pin));
+bool isTouched(uint8_t pin) {
+    int val = max(touchRead(pin), touchRead(pin));
+    DEBUG_CORE_0 && Serial.print("isTouched - ");
+    DEBUG_CORE_0 && Serial.println(val);
+    if (val <= HOTFIX_THRESHOLD) {
+        return true;
+    }
+    return false;
 }
 
 void pollConfigInput() {

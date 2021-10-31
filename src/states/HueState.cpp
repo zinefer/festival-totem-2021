@@ -3,6 +3,16 @@
 namespace states {
     int HueState::readHue() {
         int h;
+        
+        if (overrideTime > 0) {
+            if ((millis() - overrideTime) <= 1000) {
+                lock();
+                h = hueOverride;
+                releaseLock();
+                return h;
+            }
+        }
+
         lock();
         h = hue;
         releaseLock();
@@ -18,6 +28,7 @@ namespace states {
     void HueState::set(uint8_t h) {
         lock();
         hue = h % 256;
+        overrideTime = millis();
         releaseLock();
     };
 }

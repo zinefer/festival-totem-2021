@@ -37,9 +37,10 @@ namespace animator {
             bool started = false;
 
             static void loop(void *pvParameters);
+            void advanceTimeline();
 
         public:
-            Animator(CRGB* leds, OverlayState* overlayState, HueState* hueState);
+            Animator(CRGB* leds, ConfigState* configState, OverlayState* overlayState, HueState* hueState);
             void start();
             void tick();
 

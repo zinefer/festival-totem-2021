@@ -15,9 +15,11 @@ namespace effects {
 
     class BaseEffect {
         protected:
-            CRGB *leds;
+            CRGB* leds;
             
-        public:            
+        public:
+            bool stopped = false;
+    
             BaseEffect(CRGB *l);
             virtual void frame();
     };

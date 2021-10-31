@@ -11,7 +11,7 @@ namespace effects {
                 paletteName = "heat";
             break;
             case 1:
-                palette = CRGBPalette16( CRGB::Black, CRGB::Blue, CRGB::Aqua,  CRGB::White);
+                palette = CRGBPalette16( CRGB::Black, CRGB::Blue, CRGB::Aqua);
                 paletteName = "black blue aqua white";
             break;
             case 2:

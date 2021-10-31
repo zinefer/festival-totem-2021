@@ -2,12 +2,18 @@
 
 namespace effects {
 
-    LightningEffect::LightningEffect(CRGB *l) : BaseEffect(l) {
+    LightningEffect::LightningEffect(CRGB *l, ConfigState *c) : BaseEffect(l) {
+        config = c;
         pulsePosition = 0;
     }
 
     // A fast bright, white blink with a flicker triggered pretty randomly
     void LightningEffect::frame() {
+        if (config->isLightningEnabled() == false) {
+            stopped = true;
+            return;
+        }
+
         EVERY_N_MILLISECONDS( 20 ) {
             DEBUG_CORE_1 && Serial.println("# LightningEffect");
             int segment = NUM_LEDS / 5;

@@ -27,6 +27,11 @@ function compile {
     $ARDUINO_CLI compile --fqbn esp32:esp32:esp32:PartitionScheme=min_spiffs .
 }
 
+function upload {
+    compile
+    $ARDUINO_CLI upload --fqbn esp32:esp32:esp32:PartitionScheme=min_spiffs . -p /dev/tty.SLAB_USBtoUART
+}
+
 function new {
     TYPE=${1?}
     NAME=${2?}Effect
